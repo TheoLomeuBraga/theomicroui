@@ -890,6 +890,29 @@ int mu_slider_ex(mu_Context *ctx, mu_Real *value, mu_Real low, mu_Real high,
   return res;
 }
 
+int mu_progress_bar_ex(mu_Context *ctx, mu_Real value, mu_Real low, mu_Real high, mu_Real step, const char *fmt, int opt)
+{
+  char buf[MU_MAX_FMT + 1];
+  mu_Rect thumb;
+  int x, w, res = 0;
+  mu_Real last = value, v = last;
+  mu_Id id = mu_get_id(ctx, &value, sizeof(value));
+  mu_Rect base = mu_layout_next(ctx);
+
+  /* draw base */
+  mu_draw_control_frame(ctx, id, base, MU_COLOR_BASE, opt);
+  /* draw thumb */
+  w = ctx->style->thumb_size;
+  x = (v - low) * (base.w - w) / (high - low);
+  thumb = mu_rect(base.x, base.y, w + x, base.h);
+  mu_draw_control_frame(ctx, id, thumb, MU_COLOR_BUTTON, opt);
+  /* draw text  */
+  sprintf(buf, fmt, v);
+  mu_draw_control_text(ctx, buf, base, MU_COLOR_TEXT, opt);
+
+  return res;
+}
+
 
 int mu_number_ex(mu_Context *ctx, mu_Real *value, mu_Real step,
   const char *fmt, int opt)

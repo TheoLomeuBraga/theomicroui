@@ -6,6 +6,13 @@
         "assert.h": "c",
         "renderer.h": "c",
         "microui.h": "c",
-        "sdl_opengles.h": "c"
+        "sdl_opengles.h": "c",
+        "ratio": "c",
+        "system_error": "c",
+        "array": "c",
+        "functional": "c",
+        "tuple": "c",
+        "type_traits": "c",
+        "utility": "c"
     }
 }
