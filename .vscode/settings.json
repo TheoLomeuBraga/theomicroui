@@ -1,0 +1,11 @@
+{
+    "files.associations": {
+        "typeinfo": "cpp",
+        "sdl.h": "c",
+        "sdl_opengl.h": "c",
+        "assert.h": "c",
+        "renderer.h": "c",
+        "microui.h": "c",
+        "sdl_opengles.h": "c"
+    }
+}
