@@ -892,7 +892,7 @@ int mu_slider_ex(mu_Context *ctx, mu_Real *value, mu_Real low, mu_Real high,
 
 int mu_progress_bar_ex(mu_Context *ctx, mu_Real value, mu_Real low, mu_Real high, mu_Real step, const char *fmt, int opt)
 {
-  char buf[MU_MAX_FMT + 1];
+  char buf[MU_MAX_FMT + 2];
   mu_Rect thumb;
   int x, w, res = 0;
   mu_Real last = value, v = last;
@@ -908,6 +908,7 @@ int mu_progress_bar_ex(mu_Context *ctx, mu_Real value, mu_Real low, mu_Real high
   mu_draw_control_frame(ctx, id, thumb, MU_COLOR_BUTTON, opt);
   /* draw text  */
   sprintf(buf, fmt, v);
+  buf[MU_MAX_FMT + 1] = '%';
   mu_draw_control_text(ctx, buf, base, MU_COLOR_TEXT, opt);
 
   return res;
