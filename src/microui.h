@@ -182,6 +182,9 @@ struct mu_Context {
   mu_Id last_id;
   mu_Rect last_rect;
   int last_zindex;
+  mu_Rect last_selectable_rect;
+  mu_Rect last_window_header_rect;
+  mu_Rect last_window_close_button_rect;
   int updated_focus;
   int frame;
   mu_Container *hover_root;

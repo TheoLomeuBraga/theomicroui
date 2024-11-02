@@ -679,6 +679,8 @@ int mu_mouse_over(mu_Context *ctx, mu_Rect rect) {
 void mu_update_control(mu_Context *ctx, mu_Id id, mu_Rect rect, int opt) {
   int mouseover = mu_mouse_over(ctx, rect);
 
+  ctx->last_selectable_rect = rect;
+
   if (ctx->focus == id) { ctx->updated_focus = 1; }
   if (opt & MU_OPT_NOINTERACT) { return; }
   if (mouseover && !ctx->mouse_down) { ctx->hover = id; }
@@ -747,12 +749,15 @@ int mu_button_ex(mu_Context *ctx, const char *label, int icon, int opt) {
 }
 
 
+
+
 int mu_checkbox(mu_Context *ctx, const char *label, int *state) {
   int res = 0;
   mu_Id id = mu_get_id(ctx, &state, sizeof(state));
   mu_Rect r = mu_layout_next(ctx);
   mu_Rect box = mu_rect(r.x, r.y, r.h, r.h);
   mu_update_control(ctx, id, r, 0);
+  
   /* handle click */
   if (ctx->mouse_pressed == MU_MOUSE_LEFT && ctx->focus == id) {
     res |= MU_RES_CHANGE;
@@ -1130,6 +1135,7 @@ int mu_begin_window_ex(mu_Context *ctx, const char *title, mu_Rect rect, int opt
     if (~opt & MU_OPT_NOTITLE) {
       mu_Id id = mu_get_id(ctx, "!title", 6);
       mu_update_control(ctx, id, tr, opt);
+      ctx->last_window_header_rect = tr;
       mu_draw_control_text(ctx, title, tr, MU_COLOR_TITLETEXT, opt);
       if (id == ctx->focus && ctx->mouse_down == MU_MOUSE_LEFT) {
         cnt->rect.x += ctx->mouse_delta.x;
@@ -1146,6 +1152,7 @@ int mu_begin_window_ex(mu_Context *ctx, const char *title, mu_Rect rect, int opt
       tr.w -= r.w;
       mu_draw_icon(ctx, MU_ICON_CLOSE, r, ctx->style->colors[MU_COLOR_TITLETEXT]);
       mu_update_control(ctx, id, r, opt);
+      ctx->last_window_close_button_rect = r;
       if (ctx->mouse_pressed == MU_MOUSE_LEFT && id == ctx->focus) {
         cnt->open = 0;
       }
